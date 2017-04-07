@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>command example</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <button type="button" id="print">打印一行字</button>
+    <button type="button" id="cancel">撤销操作</button>
+    <div id="board">
+
+    </div>
+</body>
+<script>
+    var print = document.getElementById('print')
+    var board = document.getElementById('board')
+    var cancel = document.getElementById('cancel')
+
+    var PrintCommand = function(receiver, str) {
+            this.receiver = receiver
+            this.str = str
+            this.content = receiver.innerHTML
+            this.count = 0
+        }
+        //执行相关操作
+    PrintCommand.prototype.execute = function() {
+        this.receiver.innerHTML += this.str
+        this.count++
+    }
+    PrintCommand.prototype.undo = function() {
+        if (this.count) {
+            this.count--
+                this.computeStr()
+            this.receiver.innerHTML = this.content
+        } else {
+            this.receiver.innerHTML = ''
+        }
+        // this.receiver.innerHTML = ''   
+    }
+    PrintCommand.prototype.computeStr = function(str) {
+        var tempStr = ''
+        for (var i = 0; i < this.count; i++) {
+            tempStr += this.str
+        }
+        this.content = tempStr
+    }
+
+    var cmd = new PrintCommand({}, '')
+    print.onclick = function() {
+        var str = '我是一行字<br/>'
+        cmd.receiver = board
+        cmd.str = str
+        cmd.execute()
+    }
+    cancel.onclick = function() {
+        // var str = '我是一行字<br/>'
+        // var cmd=new PrintCommand(board,str)
+        cmd.undo()
+    }
+</script>
+
+</html>
