@@ -37,6 +37,6 @@ var queue=Make_command_queue()
 // queue.push(breakfast)
 // queue.push(school)
 // queue.push(lunch)
-queue.push(lunch,school,breakfast,getUp)
+queue.push(lunch,school,breakfast,getUp,1,2)
 
 queue.excute()
